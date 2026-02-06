@@ -1,0 +1,40 @@
+body {
+  font-family: Tahoma;
+  margin: 0;
+  background: linear-gradient(#1b1b1b, #3a2c1a);
+  color: gold;
+  text-align: center;
+}
+
+header {
+  padding: 30px;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/3/3b/Persepolis.jpg");
+  background-size: cover;
+  color: gold;
+  text-shadow: 2px 2px black;
+}
+
+nav {
+  background: #2c1f14;
+  padding: 15px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: 2px solid gold;
+  background: transparent;
+  color: gold;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+button:hover {
+  background: gold;
+  color: black;
+}
+
+main {
+  padding: 30px;
+}
