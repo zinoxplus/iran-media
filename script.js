@@ -1,10 +1,9 @@
-let allFiles = []; // برای جستجو نگه میداریم
+let allFiles = []; // برای جستجو
 
 async function loadMedia(type = null) {
   const types = type ? [type] : ["music","videos","images","texts"];
   let html = "";
-
-  allFiles = []; // پاک کردن قبلی
+  allFiles = [];
 
   for (const t of types) {
     const apiUrl = `https://api.github.com/repos/zinoxplus/iran-media/contents/media/${t}`;
@@ -13,7 +12,6 @@ async function loadMedia(type = null) {
       const files = await response.json();
 
       for (const file of files) {
-
         let itemHTML = "";
 
         // موزیک
@@ -30,7 +28,7 @@ async function loadMedia(type = null) {
           itemHTML = `
             <div class="media-item" data-name="${file.name}">
               <p>🎬 ${file.name}</p>
-              <video controls width="400" src="${file.download_url}"></video>
+              <video controls src="${file.download_url}"></video>
             </div>`;
         }
 
@@ -39,7 +37,7 @@ async function loadMedia(type = null) {
           itemHTML = `
             <div class="media-item" data-name="${file.name}">
               <p>🖼 ${file.name}</p>
-              <img width="300" src="${file.download_url}">
+              <img src="${file.download_url}">
             </div>`;
         }
 
@@ -70,12 +68,12 @@ function showSection(section) {
   loadMedia(section);
 }
 
-// جستجو
+// جستجوی زنده
 function searchFiles() {
   const query = document.getElementById("searchInput").value.toLowerCase();
   const filtered = allFiles.filter(f => f.name.includes(query));
   document.getElementById("content").innerHTML = filtered.map(f => f.html).join("") || "<p>موردی یافت نشد.</p>";
 }
 
-// بارگذاری اولیه (آخرین آپلودها)
+// بارگذاری اولیه
 document.addEventListener("DOMContentLoaded", () => loadMedia());
