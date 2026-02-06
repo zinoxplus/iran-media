@@ -1,7 +1,7 @@
 async function loadMedia(type) {
   const url = `media/${type}/`;
 
-  const response = await fetch(`https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/media/${type}`);
+  const response = await fetch(`https://api.github.com/repos/zinoxplus/iran-media/contents/media/${type}`);
   const files = await response.json();
 
   let html = `<h2>${type.toUpperCase()}</h2>`;
