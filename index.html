@@ -2,28 +2,36 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>ایران مدیا | آرشیو ملی</title>
+  <title>ایران مدیا </title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="لوگو ایران مدیا" class="logo">
+    <h1>🏛 ایران مدیا</h1>
+    <p>IRAN MEDIA</p>
+  </header>
 
-<header>
-  <h1>🏛 ایران مدیا</h1>
-  <p>آرشیو فرهنگی ایران باستان</p>
-</header>
+  <div class="container">
+    <!-- پنل کناری -->
+    <aside>
+      <h3>دسته‌بندی‌ها</h3>
+      <ul>
+        <li onclick="showSection('music')">🎵 موسیقی</li>
+        <li onclick="showSection('videos')">🎬 ویدیو</li>
+        <li onclick="showSection('images')">🖼 تصاویر</li>
+        <li onclick="showSection('texts')">📜 متن‌ها</li>
+      </ul>
+      <input type="text" id="searchInput" placeholder="جستجو..." onkeyup="searchFiles()">
+    </aside>
 
-<nav>
-  <button onclick="showSection('music')">🎵 موسیقی</button>
-  <button onclick="showSection('videos')">🎬 ویدیو</button>
-  <button onclick="showSection('images')">🖼 تصاویر</button>
-  <button onclick="showSection('texts')">📜 متن‌ها</button>
-</nav>
+    <!-- بخش محتوا -->
+    <main id="content">
+      <h2>آخرین آپلودها</h2>
+      <p>آخرین فایل‌های آپلود شده از مخزن گیت‌هاب به صورت خودکار اینجا نمایش داده می‌شوند.</p>
+    </main>
+  </div>
 
-<main id="content">
-  <h2>به ایران مدیا خوش آمدید</h2>
-  <p>فایل‌های خود را در مخزن GitHub آپلود کنید تا اینجا نمایش داده شوند.</p>
-</main>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
