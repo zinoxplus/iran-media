@@ -1,117 +1,130 @@
-/* ======== BODY ======== */
 body {
-  font-family: "Vazir", sans-serif;
   margin: 0;
-  background: linear-gradient(#f2e8d5, #d9c8a8);
-  color: #3a2a1f;
-}
-
-/* ======== FLAG ======== */
-.flag {
-  width: 100%;
-  height: 60px;
-  background: linear-gradient(to right, #d50000, #fff 50%, #002b7f);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.flag img {
-  height: 50px;
-}
-
-/* ======== HEADER ======== */
-header {
-  background: url('https://upload.wikimedia.org/wikipedia/commons/3/3b/Persepolis.jpg') center/cover no-repeat;
-  text-align: center;
-  padding: 50px 20px;
-  border-bottom: 8px solid #b8860b;
-  position: relative;
-}
-header h1 {
-  font-size: 48px;
-  color: #b8860b;
-  text-shadow: 2px 2px #3a2a1f;
-  margin: 10px 0;
-}
-header p {
-  font-size: 20px;
-  color: #e0c38a;
-}
-.logo {
-  width: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-.faravahar {
-  width: 80px;
-  margin-top: 10px;
-}
-
-/* ======== LAYOUT ======== */
-.container {
-  display: flex;
-  min-height: 80vh;
-  padding: 20px;
-  gap: 20px;
-}
-
-/* ======== PANEL ======== */
-aside {
-  width: 240px;
-  background: #3a2a1f;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 2px 2px 12px rgba(0,0,0,0.4);
-}
-aside h3 {
+  font-family: Tahoma;
+  background: radial-gradient(circle, #111, #000);
   color: gold;
+}
+
+/* HERO */
+.hero {
   text-align: center;
+  padding: 60px 20px;
+  background: url("https://upload.wikimedia.org/wikipedia/commons/3/3b/Persepolis.jpg")
+    center/cover no-repeat;
+  border-bottom: 4px solid gold;
 }
-aside ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
+
+.hero h1 {
+  font-size: 65px;
+  text-shadow: 3px 3px black;
 }
-aside ul li {
+
+.hero p {
+  font-size: 20px;
+  color: #ffe7a8;
+}
+
+.top-symbols img {
+  width: 80px;
+  margin: 10px;
+  filter: drop-shadow(2px 2px 6px black);
+}
+
+.hero input {
+  margin-top: 25px;
   padding: 12px;
+  width: 60%;
+  max-width: 500px;
+  border-radius: 12px;
+  border: 2px solid gold;
+  background: rgba(0,0,0,0.7);
+  color: gold;
+  font-size: 18px;
+  outline: none;
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  min-height: 90vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 230px;
+  background: linear-gradient(#1a1a1a, #000);
+  padding: 20px;
+  border-left: 3px solid gold;
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sidebar button {
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid gold;
+  background: transparent;
+  color: gold;
+  font-size: 16px;
   cursor: pointer;
-  border-bottom: 1px solid #b8860b;
-  color: #e0c38a;
+  border-radius: 10px;
   transition: 0.3s;
 }
-aside ul li:hover {
-  background: #b8860b;
-  color: #fff;
+
+.sidebar button:hover {
+  background: gold;
+  color: black;
 }
-aside input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 20px;
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255,215,0,0.08);
   border: 1px solid gold;
-  border-radius: 5px;
-  background: #1b1b1b;
-  color: gold;
-}
-
-/* ======== CONTENT ======== */
-main {
-  flex: 1;
-  padding: 10px;
-}
-
-/* ======== MEDIA ITEMS ======== */
-.media-item {
-  margin: 15px 0;
+  border-radius: 15px;
   padding: 15px;
-  background: #e0d4b0;
-  border-radius: 10px;
-  border: 1px solid #b8860b;
-  text-align: right;
-  white-space: pre-wrap;
-  box-shadow: 1px 1px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: 0.3s;
 }
-.media-item img, .media-item video, .media-item audio {
-  margin-top: 10px;
-  border-radius: 5px;
-  max-width: 100%;
+
+.card:hover {
+  transform: scale(1.05);
+  background: rgba(255,215,0,0.18);
+}
+
+.card h3 {
+  font-size: 18px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+}
+
+.modal-box {
+  background: #111;
+  border: 2px solid gold;
+  border-radius: 15px;
+  max-width: 700px;
+  margin: 80px auto;
+  padding: 20px;
+}
+
+.close {
+  float: left;
+  cursor: pointer;
+  font-size: 22px;
 }
