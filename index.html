@@ -4,49 +4,50 @@
   <meta charset="UTF-8">
 
   <!-- SEO -->
-  <title>ایران مدیا |</title>
-  <meta name="description" content="ایران مدیا آرشیو فرهنگی شاهنشاهی ایران برای نمایش موسیقی، ویدیو، تصاویر و متون ایرانی.">
-  <meta name="keywords" content="ایران مدیا, آرشیو ایران, شاهنشاهی, تخت جمشید, شیر و خورشید, هخامنشی">
+  <title>ایران بزرگ مدیا | Iran Great Media</title>
+  <meta name="description" content="ایران بزرگ مدیا آرشیو چندرسانه‌ای شاهنشاهی برای موسیقی، ویدیو، تصاویر و متون ایرانی با طراحی افسانه‌ای.">
+  <meta name="keywords" content="ایران بزرگ مدیا, شاهنشاهی, ایران باستان, شیر و خورشید, هخامنشی, آرشیو ایرانی, Persian media archive">
   <meta name="author" content="zinoxplus">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google / Social Preview -->
-  <meta property="og:title" content="ایران مدیا ن">
-  <meta property="og:description" content="great iran">
-  <meta property="og:type" content="website">
+  <!-- Social OpenGraph -->
+  <meta property="og:title" content="ایران بزرگ مدیا | Iran Great Media">
+  <meta property="og:description" content="IRAN">
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- HERO HEADER -->
+<!-- HEADER -->
 <header class="hero">
-
-  <div class="top-symbols">
-    <img src="assets/shahbaz.png" alt="شهباز هخامنشی">
-    <img src="assets/lion.png" alt="شیر و خورشید">
+  <div class="header-logo">
+    <img src="assets/logo.png" alt="لوگوی ایران بزرگ مدیا">
   </div>
 
-  <h1>ایران مدیا</h1>
-  <p>آرشیو شاهنشاهی ایران • تخت جمشید دیجیتال</p>
+  <div class="symbols">
+    <img src="assets/lion-sun.svg" alt="نماد شیر و خورشید">
+    <img src="assets/shahbaz.png" alt="نماد شهباز هخامنشی">
+  </div>
 
-  <!-- Search -->
+  <h1>ایران بزرگ مدیا</h1>
+  
+
   <input
     type="text"
     id="searchInput"
-    placeholder="جستجو در آرشیو..."
+    placeholder="جستجو در شاهکارهای ایران بزرگ..."
     onkeyup="searchFiles()"
   >
+  
+  <div class="switch-theme" onclick="toggleTheme()">🌙/☀️</div>
 </header>
 
-<!-- MAIN LAYOUT -->
 <div class="layout">
 
-  <!-- Sidebar -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <h2>دسته‌بندی</h2>
-
     <button onclick="loadHome()">🏛 خانه</button>
     <button onclick="loadCategory('music')">🎵 موسیقی</button>
     <button onclick="loadCategory('videos')">🎬 ویدیو</button>
@@ -54,15 +55,15 @@
     <button onclick="loadCategory('texts')">📜 متون</button>
   </aside>
 
-  <!-- Content -->
+  <!-- MAIN CONTENT -->
   <main>
-    <h2 id="pageTitle">آخرین آپلودها</h2>
+    <h2 id="pageTitle">آخرین شاهکارها</h2>
     <div id="cards" class="cards"></div>
   </main>
 
 </div>
 
-<!-- Modal Viewer -->
+<!-- MODAL VIEWER -->
 <div id="modal" class="modal">
   <div class="modal-box">
     <span class="close" onclick="closeModal()">✖</span>
