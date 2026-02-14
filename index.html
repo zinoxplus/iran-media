@@ -2,45 +2,74 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>ایران مدیا | آرشیو ملی</title>
+
+  <!-- SEO -->
+  <title>ایران مدیا |</title>
+  <meta name="description" content="ایران مدیا آرشیو فرهنگی شاهنشاهی ایران برای نمایش موسیقی، ویدیو، تصاویر و متون ایرانی.">
+  <meta name="keywords" content="ایران مدیا, آرشیو ایران, شاهنشاهی, تخت جمشید, شیر و خورشید, هخامنشی">
+  <meta name="author" content="zinoxplus">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google / Social Preview -->
+  <meta property="og:title" content="ایران مدیا ن">
+  <meta property="og:description" content="great iran">
+  <meta property="og:type" content="website">
+
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- پرچم شیروخورشید -->
-  <div class="flag">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Flag_of_Iran_%281921%E2%80%931974%29.svg" alt="پرچم شیروخورشید ایران">
+<!-- HERO HEADER -->
+<header class="hero">
+
+  <div class="top-symbols">
+    <img src="assets/shahbaz.png" alt="شهباز هخامنشی">
+    <img src="assets/lion.png" alt="شیر و خورشید">
   </div>
 
-  <!-- هدر -->
-  <header>
-    <img src="logo.png" alt="لوگو ایران مدیا" class="logo">
-    <h1>🏛 ایران مدیا</h1>
-    <p>آرشیو فرهنگی ایران باستان</p>
-    <!-- فروهر -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Faravahar.svg" alt="فروهر" class="faravahar">
-  </header>
+  <h1>ایران مدیا</h1>
+  <p>آرشیو شاهنشاهی ایران • تخت جمشید دیجیتال</p>
 
-  <div class="container">
-    <!-- پنل کناری -->
-    <aside>
-      <h3>دسته‌بندی‌ها</h3>
-      <ul>
-        <li onclick="showSection('music')">🎵 موسیقی</li>
-        <li onclick="showSection('videos')">🎬 ویدیو</li>
-        <li onclick="showSection('images')">🖼 تصاویر</li>
-        <li onclick="showSection('texts')">📜 متن‌ها</li>
-      </ul>
-      <input type="text" id="searchInput" placeholder="جستجو..." onkeyup="searchFiles()">
-    </aside>
+  <!-- Search -->
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="جستجو در آرشیو..."
+    onkeyup="searchFiles()"
+  >
+</header>
 
-    <!-- بخش محتوا -->
-    <main id="content">
-      <h2>آخرین آپلودها</h2>
-      <p>آخرین فایل‌های آپلود شده از مخزن گیت‌هاب به صورت خودکار اینجا نمایش داده می‌شوند.</p>
-    </main>
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>دسته‌بندی</h2>
+
+    <button onclick="loadHome()">🏛 خانه</button>
+    <button onclick="loadCategory('music')">🎵 موسیقی</button>
+    <button onclick="loadCategory('videos')">🎬 ویدیو</button>
+    <button onclick="loadCategory('images')">🖼 تصاویر</button>
+    <button onclick="loadCategory('texts')">📜 متون</button>
+  </aside>
+
+  <!-- Content -->
+  <main>
+    <h2 id="pageTitle">آخرین آپلودها</h2>
+    <div id="cards" class="cards"></div>
+  </main>
+
+</div>
+
+<!-- Modal Viewer -->
+<div id="modal" class="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">✖</span>
+    <div id="modalContent"></div>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
