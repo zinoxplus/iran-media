@@ -1,79 +1,95 @@
-let allFiles = []; // برای جستجو
+let allFiles = [];
 
-async function loadMedia(type = null) {
-  const types = type ? [type] : ["music","videos","images","texts"];
-  let html = "";
+const repo = "https://api.github.com/repos/zinoxplus/iran-media/contents/media";
+
+async function fetchCategory(type) {
+  const res = await fetch(`${repo}/${type}`);
+  return await res.json();
+}
+
+/* خانه = آخرین آپلودها */
+async function loadHome() {
+  document.getElementById("pageTitle").innerText = "آخرین آپلودها";
   allFiles = [];
 
-  for (const t of types) {
-    const apiUrl = `https://api.github.com/repos/zinoxplus/iran-media/contents/media/${t}`;
-    try {
-      const response = await fetch(apiUrl);
-      const files = await response.json();
+  let types = ["music", "videos", "images", "texts"];
+  let combined = [];
 
-      for (const file of files) {
-        let itemHTML = "";
-
-        // موزیک
-        if (file.name.endsWith(".mp3")) {
-          itemHTML = `
-            <div class="media-item" data-name="${file.name}">
-              <p>🎵 ${file.name}</p>
-              <audio controls src="${file.download_url}"></audio>
-            </div>`;
-        }
-
-        // ویدیو
-        else if (file.name.endsWith(".mp4")) {
-          itemHTML = `
-            <div class="media-item" data-name="${file.name}">
-              <p>🎬 ${file.name}</p>
-              <video controls src="${file.download_url}"></video>
-            </div>`;
-        }
-
-        // عکس
-        else if (file.name.endsWith(".jpg") || file.name.endsWith(".png")) {
-          itemHTML = `
-            <div class="media-item" data-name="${file.name}">
-              <p>🖼 ${file.name}</p>
-              <img src="${file.download_url}">
-            </div>`;
-        }
-
-        // متن txt
-        else if (file.name.endsWith(".txt")) {
-          const txtContent = await fetch(file.download_url).then(res => res.text());
-          itemHTML = `
-            <div class="media-item" data-name="${file.name}">
-              <h3>📜 ${file.name}</h3>
-              <p>${txtContent}</p>
-            </div>`;
-        }
-
-        html += itemHTML;
-        allFiles.push({name: file.name.toLowerCase(), html: itemHTML});
-      }
-
-    } catch (error) {
-      console.error("خطا در بارگذاری فایل‌ها:", error);
-    }
+  for (let t of types) {
+    let files = await fetchCategory(t);
+    files.forEach(f => combined.push({...f, category: t}));
   }
 
-  document.getElementById("content").innerHTML = html || "<p>هیچ فایلی یافت نشد.</p>";
+  combined = combined.slice(0, 12); // فقط ۱۲ تای آخر
+
+  renderCards(combined);
 }
 
-// نمایش بخش خاص
-function showSection(section) {
-  loadMedia(section);
+/* دسته‌بندی */
+async function loadCategory(type) {
+  document.getElementById("pageTitle").innerText = "بخش: " + type;
+  let files = await fetchCategory(type);
+
+  files = files.map(f => ({...f, category: type}));
+
+  renderCards(files);
 }
 
-// جستجوی زنده
+/* نمایش کارت‌ها */
+function renderCards(files) {
+  allFiles = files;
+
+  let html = files.map(file => `
+    <div class="card" onclick="openFile('${file.download_url}', '${file.name}', '${file.category}')">
+      <h3>${file.name}</h3>
+      <p>📂 ${file.category}</p>
+      <small>برای باز کردن کلیک کن</small>
+    </div>
+  `).join("");
+
+  document.getElementById("cards").innerHTML = html;
+}
+
+/* Lazy Load Viewer */
+async function openFile(url, name, category) {
+  let content = "";
+
+  if (category === "music") {
+    content = `<h2>${name}</h2><audio controls src="${url}"></audio>`;
+  }
+
+  if (category === "videos") {
+    content = `<h2>${name}</h2><video controls width="100%" src="${url}"></video>`;
+  }
+
+  if (category === "images") {
+    content = `<h2>${name}</h2><img width="100%" src="${url}">`;
+  }
+
+  if (category === "texts") {
+    let txt = await fetch(url).then(r => r.text());
+    content = `<h2>${name}</h2><pre>${txt}</pre>`;
+  }
+
+  document.getElementById("modalContent").innerHTML = content;
+  document.getElementById("modal").style.display = "block";
+}
+
+/* بستن مودال */
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+/* Search Pro */
 function searchFiles() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
-  const filtered = allFiles.filter(f => f.name.includes(query));
-  document.getElementById("content").innerHTML = filtered.map(f => f.html).join("") || "<p>موردی یافت نشد.</p>";
+  let q = document.getElementById("searchInput").value.toLowerCase();
+
+  let filtered = allFiles.filter(f =>
+    f.name.toLowerCase().includes(q)
+  );
+
+  renderCards(filtered);
 }
 
-// بارگذاری اولیه
-document.addEventListener("DOMContentLoaded", () => loadMedia());
+/* شروع سایت */
+document.addEventListener("DOMContentLoaded", loadHome);
