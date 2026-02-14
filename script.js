@@ -1,95 +1,61 @@
 let allFiles = [];
 
-const repo = "https://api.github.com/repos/zinoxplus/iran-media/contents/media";
+const repoUrl = "https://api.github.com/repos/zinoxplus/iran-media/contents/media";
 
-async function fetchCategory(type) {
-  const res = await fetch(`${repo}/${type}`);
-  return await res.json();
-}
-
-/* خانه = آخرین آپلودها */
+/* Load Home with sorted by date */
 async function loadHome() {
-  document.getElementById("pageTitle").innerText = "آخرین آپلودها";
+  document.getElementById("pageTitle").innerText = "آخرین شاهکارها";
   allFiles = [];
 
-  let types = ["music", "videos", "images", "texts"];
+  let types = ["music","videos","images","texts"];
   let combined = [];
 
   for (let t of types) {
-    let files = await fetchCategory(t);
-    files.forEach(f => combined.push({...f, category: t}));
+    let files = await fetch(`${repoUrl}/${t}`).then(r=>r.json());
+    files.forEach(f => combined.push({...f, category:t}));
   }
 
-  combined = combined.slice(0, 12); // فقط ۱۲ تای آخر
-
+  combined.sort((a,b) => new Date(b.sha) - new Date(a.sha)); // sort by github updated SHA
   renderCards(combined);
 }
 
-/* دسته‌بندی */
 async function loadCategory(type) {
-  document.getElementById("pageTitle").innerText = "بخش: " + type;
-  let files = await fetchCategory(type);
-
-  files = files.map(f => ({...f, category: type}));
-
+  document.getElementById("pageTitle").innerText = "دسته: " + type;
+  let files = await fetch(`${repoUrl}/${type}`).then(r=>r.json());
+  files = files.map(f => ({...f, category:type}));
   renderCards(files);
 }
 
-/* نمایش کارت‌ها */
 function renderCards(files) {
   allFiles = files;
-
-  let html = files.map(file => `
-    <div class="card" onclick="openFile('${file.download_url}', '${file.name}', '${file.category}')">
-      <h3>${file.name}</h3>
-      <p>📂 ${file.category}</p>
-      <small>برای باز کردن کلیک کن</small>
+  document.getElementById("cards").innerHTML = files.map(f => `
+    <div class="card" onclick="openFile('${f.download_url}','${f.name}','${f.category}')">
+      <h3>${f.name}</h3><p>📂 ${f.category}</p>
     </div>
   `).join("");
-
-  document.getElementById("cards").innerHTML = html;
 }
 
-/* Lazy Load Viewer */
-async function openFile(url, name, category) {
-  let content = "";
-
-  if (category === "music") {
-    content = `<h2>${name}</h2><audio controls src="${url}"></audio>`;
-  }
-
-  if (category === "videos") {
-    content = `<h2>${name}</h2><video controls width="100%" src="${url}"></video>`;
-  }
-
-  if (category === "images") {
-    content = `<h2>${name}</h2><img width="100%" src="${url}">`;
-  }
-
-  if (category === "texts") {
-    let txt = await fetch(url).then(r => r.text());
-    content = `<h2>${name}</h2><pre>${txt}</pre>`;
-  }
-
-  document.getElementById("modalContent").innerHTML = content;
-  document.getElementById("modal").style.display = "block";
+async function openFile(url,name,cat) {
+  let html = "";
+  if(cat==="music") html=`<h2>${name}</h2><audio controls src="${url}"></audio>`;
+  if(cat==="videos") html=`<h2>${name}</h2><video controls width="100%" src="${url}"></video>`;
+  if(cat==="images") html=`<h2>${name}</h2><img width="100%" src="${url}">`;
+  if(cat==="texts") html=`<h2>${name}</h2><pre>${await fetch(url).then(r=>r.text())}</pre>`;
+  document.getElementById("modalContent").innerHTML = html;
+  document.getElementById("modal").style.display="block";
 }
 
-/* بستن مودال */
 function closeModal() {
-  document.getElementById("modal").style.display = "none";
+  document.getElementById("modal").style.display="none";
 }
 
-/* Search Pro */
 function searchFiles() {
-  let q = document.getElementById("searchInput").value.toLowerCase();
-
-  let filtered = allFiles.filter(f =>
-    f.name.toLowerCase().includes(q)
-  );
-
-  renderCards(filtered);
+  let q=document.getElementById("searchInput").value.toLowerCase();
+  renderCards(allFiles.filter(f=>f.name.toLowerCase().includes(q)));
 }
 
-/* شروع سایت */
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+}
+
 document.addEventListener("DOMContentLoaded", loadHome);
